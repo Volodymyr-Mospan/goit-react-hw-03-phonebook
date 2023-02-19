@@ -4,20 +4,28 @@ import { ContactForm, ContactList, Filter } from 'components/Contacts/';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const localeStorageContacts = localStorage.getItem('contacts');
+
+    if (localeStorageContacts)
+      this.setState({ contacts: JSON.parse(localeStorageContacts) });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   addContact = contact => {
     const { name, number } = contact;
     this.setState({
       contacts: [
-        { name: name, id: nanoid(), number: number },
+        { id: nanoid(10), name: name, number: number },
         ...this.state.contacts,
       ],
     });
