@@ -23,12 +23,12 @@ export class App extends Component {
 
   addContact = contact => {
     const { name, number } = contact;
-    this.setState({
+    this.setState(prevState => ({
       contacts: [
         { id: nanoid(10), name: name, number: number },
-        ...this.state.contacts,
+        ...prevState.contacts,
       ],
-    });
+    }));
   };
 
   checkingContacts = name => {

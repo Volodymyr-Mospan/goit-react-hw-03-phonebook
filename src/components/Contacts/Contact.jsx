@@ -1,26 +1,18 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ContactBtn } from 'components/Contacts/';
 
 // import css from './Contacts.module.css';
 
-export class Contact extends Component {
-  handleDeleteContact = e => {
-    this.props.onClick(this.props.contact.id);
-  };
-  render() {
-    const { contact } = this.props;
-
-    return (
-      <>
-        {`${contact.name}: ${contact.number}`}{' '}
-        <ContactBtn type="button" onClick={this.handleDeleteContact}>
-          Delete
-        </ContactBtn>
-      </>
-    );
-  }
-}
+export const Contact = ({ contact, onClick }) => {
+  return (
+    <>
+      {`${contact.name}: ${contact.number}`}
+      <ContactBtn type="button" onClick={() => onClick(contact.id)}>
+        Delete
+      </ContactBtn>
+    </>
+  );
+};
 
 Contact.propTypes = {
   contact: PropTypes.shape({
